@@ -9,8 +9,7 @@ class Photos(db.Model):
     photo_source = db.Column(db.String(250), nullable=False)
     photo_thumb = db.Column(db.String(250), nullable=False)
 
-    def __init__(self, id, photo_name, photo_source, photo_thumb):
-        self.id = id
+    def __init__(self, photo_name, photo_source, photo_thumb):
         self.photo_name = photo_name
         self.photo_source = photo_source
         self.photo_thumb = photo_thumb

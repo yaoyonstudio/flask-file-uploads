@@ -8,17 +8,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <h1>upload</h1>
+    <h1>Flask图片上传 + 生成缩略图 + 保存数据库</h1>
 
-    <!-- <form id="myForm" enctype="multipart/form-data" method="post"> -->
-    <input type="file" name="photos" id="photos" />
+    <input type="file" name="photos" id="photos" value="选择图片" />
     <button id="submitBtn">上传</button>
-    <button id="testBtn">测试</button>
-    <!-- </form> -->
+
+    <div id="result" style="color: #dd3333;"></div>
 
 <script src="jquery.js"></script>
 <script>
     $("#submitBtn").click(function(event){
+        if ($('#photos')[0].files.length == 0) {
+            $("#result").html('<p>请选择图片上传</p>')
+            return false
+        }
         event.preventDefault()
         var data = new FormData()
 
@@ -33,26 +36,16 @@
             cache: false,
             contentType: false,
             processData: false,
-            success:function(data){
+            success:function(res){
                 console.log(data)
+                if (res.status) {
+                    $("#result").append('<a href="' + res.data + '" target="blank"><img src="' + res.data.photo_source + '" /></a>')
+                } else {
+                    $("#result").html('<p>' + res.msg + '</p>')
+                }
             }
         })
 
-    })
-
-    $("#testBtn").click(function(){
-        $.ajax({
-            url: 'http://192.168.1.141:3333/test',
-            type: 'GET',
-            data: null,
-            cache: false,
-            success: function(data){
-                console.log(data)
-            },
-            error: function(error) {
-                console.log(error)
-            }
-        })
     })
 </script>
  </body>

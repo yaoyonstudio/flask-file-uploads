@@ -1,4 +1,3 @@
-
 class common():
     def trueReturn(data, msg):
         return {
